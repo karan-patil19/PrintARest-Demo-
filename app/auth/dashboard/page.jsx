@@ -27,7 +27,7 @@ export default function Dashboard() {
   }, [router]); // Add
   return (
     <div>
-      <header className="bg-blue-900 text-white text-center py-4">
+      <header className="bg-primary_color1 text-white text-center py-4">
         <h1 className="text-2xl font-bold"> {displayName}!,   Welcome To Print A Rest</h1>
       </header>
       

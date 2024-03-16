@@ -28,16 +28,16 @@ const XeroxShopBooking = () => {
       {shopNames.map((shopName, index) => (
         <section key={index} className="mt-8">
           <div className="shop-container">
-            <h3 className="text-xl font-semibold">{shopName}</h3>
-            <div className="shop-buttons">
+            <h3 className="text-xl font-semibold text-purpel">{shopName}</h3>
+            <div className="shop-buttons  border-zinc-50 bg-inherit-500 shadow-lg shadow-primary_color1/80 ... rounded-lg ...">
               {/* Map over timeSlots array to render available slots for this shop */}
               {timeSlots.map((slot, index) => (
-                <div key={index} className="bg-gray-100 p-4 rounded-lg shadow-md inline-block mr-4 mb-4">
+                <div key={index} className="bg-gray-100 p-4 rounded-lg shadow-md inline-block mr-4 mb-4  ">
                   <p className="text-lg font-semibold">{slot}</p>
                   {/* Add button to book slot */}
                   <button
                     onClick={() => bookSlot(index + 1, slot)} // Assuming shopId starts from 1
-                    className="mt-2 bg-blue-900 hover:bg-gradient-to-b from-pink-400 to-pink-600 text-white px-4 py-2 rounded-md hover:bg-blue-800 focus:outline-none"
+                    className="mt-2 bg-primary_color1 hover:bg-white hover:text-black text-white px-4 py-2 rounded-md border-neutral-50 focus:outline-none"
                   >
                     Book Now
                   </button>
