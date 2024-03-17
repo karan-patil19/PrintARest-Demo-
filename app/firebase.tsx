@@ -1,23 +1,28 @@
 // Import the necessary functions from the Firebase SDKs
+import { getStorage } from "@firebase/storage";
 import { initializeApp } from "firebase/app";
-import { getAuth, signOut, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { getDatabase } from "firebase/database";
+import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDN-Eh31Guhqffen9kEoTpEE5u7xwf_NvQ",
-  authDomain: "test-8405a.firebaseapp.com",
-  projectId: "test-8405a",
-  storageBucket: "test-8405a.appspot.com",
-  messagingSenderId: "166277598440",
-  appId: "1:166277598440:web:16b3dc3d6ddfc1adf24d5d",
-  measurementId: "G-CYFL7Z4LL8"
+  apiKey: "AIzaSyAFOwp108eddMlrLK4K3_NlUojWlssxsY0",
+  authDomain: "admin-auth-4d9d5.firebaseapp.com",
+  databaseURL: "https://admin-auth-4d9d5-default-rtdb.firebaseio.com",
+  projectId: "admin-auth-4d9d5",
+  storageBucket: "admin-auth-4d9d5.appspot.com",
+  messagingSenderId: "750342748569",
+  appId: "1:750342748569:web:f3492d1fc3a8be2ed8bb08",
+  measurementId: "G-QMTH06TEX3"
 };
 
 // Initialize Firebase app
 const app = initializeApp(firebaseConfig);
-
-// Get authentication instance
 export const auth = getAuth(app);
-
+export const db=getDatabase(app);
+// export const adminsRef = ref(database, 'Admins');
+export const firestore = getFirestore(app);
+export const storage1 = getStorage(app);
 // Export the authentication methods
-export { signOut, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup };
+export { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut };
