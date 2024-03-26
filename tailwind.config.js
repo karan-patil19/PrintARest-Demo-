@@ -14,6 +14,7 @@ module.exports = {
         primary_color1:'#231942',
         primary_color2:'#BE95C4',
         primary_color3:'5e548e',
+        primary_color4:'#f3edfc',
       }
     },
   },

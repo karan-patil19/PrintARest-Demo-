@@ -26,10 +26,10 @@ export function ExampleNavbarTwo() {
   }
 
   return (
-    <div className="relative w-full bg-white shadow-lg primary_color1">
+    <div className="relative w-full bg-white  shadow-2xl ">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
-          <span>
+          {/* <span>
             <svg
               width="30"
               height="30"
@@ -42,7 +42,7 @@ export function ExampleNavbarTwo() {
                 fill="black"
               />
             </svg>
-          </span>
+          </span> */}
           <span className="font-bold text-primary_color1">PrintARest</span>
         </div>
         <div className="hidden grow items-start lg:flex">

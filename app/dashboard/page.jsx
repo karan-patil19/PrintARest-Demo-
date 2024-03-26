@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { auth,firestore} from '../../firebase'; // Import the Firebase auth object
+import { auth,firestore} from '../firebase'; // Import the Firebase auth object
 import XeroxShopBooking from './XeroxShopBooking'; // Import the XeroxShopBooking component
 import ShowDocuments from './showDocuments';
 import { collection,doc,getDoc } from 'firebase/firestore';
@@ -67,6 +67,7 @@ export default function Dashboard() {
 
       
       {/* Render the XeroxShopBooking component */}
+      <XeroxShopBooking />
     </div>
   );
 }

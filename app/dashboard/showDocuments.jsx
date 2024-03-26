@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { storage1 } from "../../firebase";
+import { storage1 } from "../firebase";
 import { ref, listAll, getMetadata, getDownloadURL } from "firebase/storage";
 
 function ShowDocuments() {

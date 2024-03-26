@@ -10,20 +10,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 0,0,0;
-    --background-start-rgb:231,222,249,100;
-    --background-end-rgb: 96,78,131,100;
+    --foreground-rgb: 0, 0, 0;
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: rgb(237 233 254)
 }
 
 @layer utilities {

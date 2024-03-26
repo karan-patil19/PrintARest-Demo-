@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Toaster } from "@/components/ui/sonner"
 import { Inter } from "next/font/google";
 import "./globals.css";
 import {ExampleNavbarTwo} from "./nav"
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +24,7 @@ export default function RootLayout({
           
         </ExampleNavbarTwo>
         {children}
+        <Toaster />
         </body>
     </html>
   );
