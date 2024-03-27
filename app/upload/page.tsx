@@ -3,6 +3,8 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { ChangeEvent, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../../components/ui/avatar';
 import { Button } from '../../components/ui/button';
+import { toast } from "sonner"
+
 import {
     Card,
     CardContent,
@@ -87,7 +89,10 @@ export default function UploadPage() {
         .then((urls) => {
           const successfulURLs = urls.filter((url) => url !== null);
           if (successfulURLs.length > 0) {
-            alert('Documents uploaded successfully');
+            toast("Documents uploaded successfully.")
+
+            // alert('Documents uploaded successfully');
+            
           } else {
             alert('No documents were uploaded successfully.');
           }
