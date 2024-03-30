@@ -6,7 +6,7 @@ const XeroxShopBooking = () => {
   const router = useRouter();
   // Define function to handle booking a slot
   const bookSlot = (shopId, slotTime) => {
-    router.push("/upload")  
+    router.push(`/upload?shopId=${shopId}&slotTime=${slotTime}`);
     
   };
 

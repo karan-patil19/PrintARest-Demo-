@@ -1,10 +1,12 @@
 'use client'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useEffect } from "react";
 import { ChangeEvent, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../../components/ui/avatar';
 import { Button } from '../../components/ui/button';
 import { toast } from "sonner"
-
+import { useSearchParams,useRouter } from "next/navigation";
+import { auth,firestore,storage1 } from "../firebase";
+import { collection,doc,getDoc,setDoc} from 'firebase/firestore';
 import {
     Card,
     CardContent,
@@ -12,7 +14,7 @@ import {
     CardHeader,
     CardTitle
 } from '../../components/ui/card';
-import { storage1 } from '../firebase';
+import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 
 interface Recipe {
   id: string;
@@ -62,9 +64,20 @@ const data: Recipe[] = [
 ];
 
 export default function UploadPage() {
+  const router = useRouter();
   const [showForm, setShowForm] = useState(false);
   const [fileupload, setFileUpload] = useState<FileList | null>(null);
+  const [userEmail, setUserEmail] = useState<string | null>(null); 
+  const searchParams = useSearchParams()
+  const shopId = searchParams.get("shopId");
+  const slotTime = searchParams.get("slotTime");
 
+  useEffect(() => {
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      setUserEmail(currentUser.email);
+    }
+  }, []);
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       setFileUpload(event.target.files);
@@ -72,15 +85,32 @@ export default function UploadPage() {
   };
 
   const upload = async () => {
-    if (fileupload !== null) {
+    if (fileupload !== null && shopId && slotTime && userEmail) {
       const promises = Array.from(fileupload).map((file: File) => {
-        const fileref = ref(storage1, `documents/${file.name}`);
+        const fileref = storageRef(storage1, `documents/${file.name}`);
         return uploadBytes(fileref, file)
-          .then((data) => {
-            return getDownloadURL(data.ref);
+          .then((snapshot) => {
+            return getDownloadURL(snapshot.ref);
+          })
+          .then((url) => {
+            // Get current date and time
+            const uploadDate = new Date().toISOString();
+            const documentCollection=doc(collection(firestore, 'documents'));
+          
+
+            // Store document data in Firestore
+            return setDoc(documentCollection,{
+              documentId: file.name,
+              name: file.name,
+              url: url,
+              shopId: shopId,
+              slotTime: slotTime,
+              uploadDate: uploadDate,
+              userEmail: userEmail, // Add user email to document data
+            });
           })
           .catch((error) => {
-            console.error('Error uploading document:', error);
+            console.error("Error uploading document:", error);
             return null;
           });
       });
@@ -138,7 +168,7 @@ export default function UploadPage() {
         <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center">
           <div className="bg-white p-6 rounded shadow-lg">
             <h2 className="text-lg font-semibold mb-4">Upload Form</h2>
-            <input type="file" onChange={handleFileChange} className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
+            <input type="file" accept=".pdf" onChange={handleFileChange} multiple className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
             <div className="mt-4">
               <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">Quantity</label>
               <input id="quantity" name="quantity" type="number"  className="mt-1 focus:ring-primary_color1 focus:border-primary_color1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />

@@ -5,46 +5,50 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useRouter } from 'next/navigation';
 import { FaRegEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
-import { auth } from "../../firebase";
+import { auth,firestore } from "../../firebase";
 import { use } from "react";
 import { toast } from "sonner"
 
-
+import { collection,doc,getDoc,setDoc} from 'firebase/firestore';
 
 export default function Login() {
     const router = useRouter();
     const handleGoogleSignIn = async () => {
-
-        const provider = new GoogleAuthProvider();
-        try {
-          
+      const provider = new GoogleAuthProvider();
+      try {
           const result = await signInWithPopup(auth, provider);
-          
           if (result.user) {
-            
-            if (result.user.email && result.user.email.endsWith("paruluniversity.ac.in")) {
-              
-              console.log("Signed in successfully!", result.user);
-              
-              router.push('/dashboard'); 
-            } else {
-              
-              await auth.signOut();
-
-              toast("Please Login Your College Email Id")
-
-              // alert("Please Login Your College Email Id.");
-            }
+          
+              if (result.user.email && result.user.email.endsWith('gmail.com')) {
+                  const uid = result.user.uid;
+                  const userRef = doc(collection(firestore, 'users'), uid);
+                  try {
+                      const docSnap = await getDoc(userRef);
+                      if (!docSnap.exists()) {
+                          await setDoc(userRef, {
+                              email: result.user.email,
+                              displayName: result.user.displayName || '',
+                              uid: uid
+                          });
+                      }
+                      router.push('/dashboard');
+                  } catch (error) {
+                      console.error("Error checking user data:", error);
+                      toast("Error checking user data");
+                  }
+              } else {
+        
+                  await auth.signOut();
+                  toast("Please Login Your College Email Id")
+              }
           } else {
-            
-            console.error("User information not found in the result.");
+              console.error("User information not found in the result.");
           }
-        } catch (error) {
-         
+      } catch (error) {
           console.error("Error signing in:", error);
-        }
-      };
-
+          toast("Error signing in");
+      }
+  };
       return (
         <main className="flex min-h-screen flex-col items-center justify-center w-full flex-1 px-4 text-center sm:px-6 lg:px-8">
   <div className="bg-white rounded-2xl  flex flex-col sm:flex-row w-full max-w-4xl shadow-lg">

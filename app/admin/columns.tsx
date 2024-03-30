@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,10 +21,18 @@ export type Payment = {
   amount: number
   status: "pending" | "processing" | "success" | "failed"
   email: string
+  document :string
+  url:string
+  date:Date
 }
 
+// Define the interface for the columns array with openDocument function
+export interface ColumnsWithOpenDocument extends Array<ColumnDef<Payment>> {
+  openDocument: (url: string) => void;
+}
 
-export const columns: ColumnDef<Payment>[] = [
+// Define columns array as a function to accept openDocument as a parameter
+export const columns = (openDocument: (url: string) => void): ColumnsWithOpenDocument => [
   {
     id: "select",
     header: ({ table }) => (
@@ -49,8 +58,12 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "document",
+    header: "Document Name",
+    cell: ({ row }) => {
+      const documentName: string = row.getValue("document") as string;
+      return <div className="text-left font-medium">{documentName}</div>;
+    },
   },
   {
     accessorKey: "email",
@@ -65,6 +78,14 @@ export const columns: ColumnDef<Payment>[] = [
         </Button>
       );
     },
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
   },
   {
     accessorKey: "amount",
@@ -85,26 +106,8 @@ export const columns: ColumnDef<Payment>[] = [
       const payment = row.original;
   
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Button variant="outline" onClick={() => openDocument(payment.url)}>View</Button>
       );
     },
   },
-] 
+] as ColumnsWithOpenDocument; // Define the type assertion

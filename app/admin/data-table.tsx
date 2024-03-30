@@ -44,9 +44,11 @@ import {
 
 
 
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[];
+  openDocument:(url:string)=> void;
 }
 
 export function DataTable<TData, TValue>({
@@ -75,9 +77,8 @@ export function DataTable<TData, TValue>({
       sorting,
       columnFilters,
       columnVisibility,
-      rowSelection,
-    },
-  })
+      rowSelection,},
+    });
   interface Recipe {
     id: string;
     title: string;
@@ -110,29 +111,29 @@ export function DataTable<TData, TValue>({
   return (
     <div className="bg-primary_color1 rounded-xl p-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
-        {data1.map(recipe => (
-          <Card key={recipe.id} className="flex flex-col justify-between border border-primary_color1 bg-white">
-            <CardHeader className="flex-row gap-4 items-center">
-              <Avatar>
-                <AvatarImage src={`${recipe.image}`} alt={recipe.title} />
-                <AvatarFallback>
-                  {recipe.title.slice(0, 2)}
-                </AvatarFallback>
-              </Avatar>
-              <div>
-                <CardTitle>{recipe.title}</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p>{recipe.description}</p>
-            </CardContent>
-            <CardFooter className="flex justify-between flex-col gap-4">
-              <div className="flex gap-4">
-                
-              </div>
-              {recipe.vegan && <p>Vegan!</p>}
-            </CardFooter>
-          </Card>
+      {data1.map((recipe: Recipe, index: number) => (
+  <Card key={index} className="flex flex-col justify-between border border-primary_color1 bg-white">
+    <CardHeader className="flex-row gap-4 items-center">
+      <Avatar>
+        <AvatarImage src={`${recipe.image}`} alt={recipe.title} />
+        <AvatarFallback>
+          {recipe.title.slice(0, 2)}
+        </AvatarFallback>
+      </Avatar>
+      <div>
+        <CardTitle>{recipe.title}</CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent>
+      <p>{recipe.description}</p>
+    </CardContent>
+    <CardFooter className="flex justify-between flex-col gap-4">
+      <div className="flex gap-4">
+        
+      </div>
+      {recipe.vegan && <p>Vegan!</p>}
+    </CardFooter>
+  </Card>
         ))}
       </div>
   
