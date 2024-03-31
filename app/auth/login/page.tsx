@@ -19,7 +19,7 @@ export default function Login() {
           const result = await signInWithPopup(auth, provider);
           if (result.user) {
           
-              if (result.user.email && result.user.email.endsWith('gmail.com')) {
+              if (result.user.email && result.user.email.endsWith('paruluniversity.ac.in')) {
                   const uid = result.user.uid;
                   const userRef = doc(collection(firestore, 'users'), uid);
                   try {
@@ -39,7 +39,7 @@ export default function Login() {
               } else {
         
                   await auth.signOut();
-                  toast("Please Login Your College Email Id")
+                  toast("Please Login With Your College Email Id")
               }
           } else {
               console.error("User information not found in the result.");
@@ -52,7 +52,7 @@ export default function Login() {
       return (
         <main className="flex min-h-screen flex-col items-center justify-center w-full flex-1 px-4 text-center sm:px-6 lg:px-8">
   <div className="bg-white rounded-2xl  flex flex-col sm:flex-row w-full max-w-4xl shadow-lg">
-    <div className="w-full sm:w-2/5 bg-primary_color1 text-white py-10 px-6 rounded-b-2xl flex flex-col justify-center items-center order-1 sm:order-2">
+    <div className="w-full sm:w-2/5 bg-primary_color1 text-white py-10 px-6 rounded-lg flex flex-col justify-center items-center order-1 sm:order-2">
       <h2 className="text-3xl font-bold mb-2">Hello Everyone!</h2>
       <div className="border-2 w-10 border-white inline-block mb-2"></div>
       <p className="mb-10 text-center">
@@ -78,7 +78,7 @@ export default function Login() {
         </div>
       </div>
       {/* Login button */}
-      <button className="bg-primary_color1 w-full sm:w-80 rounded-full text-white px-12 py-2 inline-block mb-5">Login</button>
+      <button className="bg-primary_color1 w-full sm:w-80 rounded-full text-white px-12 py-2 inline-block mb-1">Login</button>
 
       <div className="py-5">or</div>
       {/* Add a button to trigger Google Sign-In */}
