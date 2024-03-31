@@ -19,7 +19,7 @@ export default function Login() {
           const result = await signInWithPopup(auth, provider);
           if (result.user) {
           
-              if (result.user.email && result.user.email.endsWith('paruluniversity.ac.in')) {
+            if (result.user.email && (result.user.email.endsWith('gmail.com') || result.user.email.endsWith('paruluniversity.ac.in'))){
                   const uid = result.user.uid;
                   const userRef = doc(collection(firestore, 'users'), uid);
                   try {
